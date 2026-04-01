@@ -276,7 +276,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 Add these topics to your GitHub repository for maximum discoverability:
 
 ```
-aeo, seo, geo, llmo, answer-engine-optimization, generative-engine-optimization, llm-optimization, chrome-extension, manifest-v3, transformers-js, privacy-first, local-llm, web-optimization, content-optimization, react-extension, typescript, vite, crxjs, onnx-runtime, distilbert, minilm, eeat, search-engine-optimization, ai-search, perplexity-optimization
+aeo, seo, geo, llmo, answer-engine-optimization, generative-engine-optimization, llm-optimization, chrome-extension, manifest-v3, transformers-js, privacy-first, local-llm, content-optimization, react-extension, typescript, vite, eeat, ai-search, search-engine-optimization, web-optimization
 ```
 
 **Why these topics?**

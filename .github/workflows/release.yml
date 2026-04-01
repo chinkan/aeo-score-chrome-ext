@@ -1,0 +1,76 @@
+name: Build & Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (e.g. 1.0.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Download ML models
+        run: bun run download-models
+
+      - name: Build extension
+        run: bun run build
+
+      - name: Zip extension
+        run: |
+          cd dist
+          zip -r ../aeo-score-calculator.zip .
+          cd ..
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+          body: |
+            ## AEO Score Calculator ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+
+            Chrome Manifest V3 extension that scores webpages for SEO, GEO, LLMO & AEO.
+
+            ### What's Included
+            - 📦 `aeo-score-calculator.zip` — Load unpacked in Chrome
+            - 🔒 100% local processing, no data leaves your machine
+            - 🤖 Local LLM inference via Transformers.js (DistilBERT + MiniLM)
+
+            ### Installation
+            1. Unzip `aeo-score-calculator.zip`
+            2. Open `chrome://extensions/`
+            3. Enable **Developer mode**
+            4. Click **Load unpacked** and select the unzipped folder
+
+            ### Changes
+            - 4-category scoring engine (AEO, SEO, GEO, LLMO)
+            - Tabbed dashboard with category-specific breakdowns
+            - Actionable suggestions ranked by severity
+            - Offline-ready with bundled models (~88 MB)
+
+            [Full Changelog](https://github.com/${{ github.repository }}/compare/${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }})
+          files: |
+            aeo-score-calculator.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
