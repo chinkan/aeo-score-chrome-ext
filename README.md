@@ -54,8 +54,6 @@ An **overall score** combines all four categories into a single number. Each cat
   <em>Extension popup with AEO/SEO/GEO/LLMO tabs and score breakdown</em>
 </p>
 
-> 📷 **Add your screenshots:** Place images in the `screenshots/` directory and update the paths above.
-
 ---
 
 ## 📦 Installation
