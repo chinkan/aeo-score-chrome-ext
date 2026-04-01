@@ -1,0 +1,62 @@
+{
+  "name": "aeo-score-calculator",
+  "version": "1.0.0",
+  "description": "Chrome extension that scores webpages for SEO, GEO, LLMO & AEO — 100% local, privacy-first, powered by Transformers.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/aeo-score-calculator.git"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/aeo-score-calculator#readme",
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/aeo-score-calculator/issues"
+  },
+  "keywords": [
+    "aeo",
+    "seo",
+    "geo",
+    "llmo",
+    "answer-engine-optimization",
+    "generative-engine-optimization",
+    "llm-optimization",
+    "chrome-extension",
+    "manifest-v3",
+    "transformers-js",
+    "privacy-first",
+    "local-llm",
+    "eeat",
+    "content-optimization"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "download-models": "bun scripts/download-models.ts"
+  },
+  "dependencies": {
+    "@xenova/transformers": "^2.17.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.469.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.0"
+  },
+  "devDependencies": {
+    "@crxjs/vite-plugin": "^2.0.0-beta.30",
+    "@tailwindcss/vite": "^4.0.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@types/chrome": "^0.0.294",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^26.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vitest": "^3.0.0"
+  }
+}
