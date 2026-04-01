@@ -33,11 +33,37 @@ jobs:
       - name: Build extension
         run: bun run build
 
-      - name: Zip extension
+      - name: Pack Chrome Web Store ZIP
         run: |
           cd dist
-          zip -r ../aeo-score-calculator.zip .
+          zip -r ../aeo-score-calculator-store.zip .
           cd ..
+
+      - name: Pack Sideloading ZIP
+        run: |
+          cd dist
+          zip -r ../aeo-score-calculator-sideload.zip .
+          cd ..
+
+      - name: Check CRX key availability
+        id: crx-check
+        run: |
+          if [ -n "${{ secrets.CRX_PRIVATE_KEY }}" ]; then
+            echo "has_key=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_key=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Pack CRX for Sideloading
+        if: steps.crx-check.outputs.has_key == 'true'
+        run: |
+          echo "$CRX_PRIVATE_KEY" > crx-key.pem
+          npx --yes crx pack dist \
+            --key crx-key.pem \
+            --crx-output aeo-score-calculator-sideload.crx
+          rm crx-key.pem
+        env:
+          CRX_PRIVATE_KEY: ${{ secrets.CRX_PRIVATE_KEY }}
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
@@ -50,13 +76,25 @@ jobs:
 
             Chrome Manifest V3 extension that scores webpages for SEO, GEO, LLMO & AEO.
 
-            ### What's Included
-            - 📦 `aeo-score-calculator.zip` — Load unpacked in Chrome
-            - 🔒 100% local processing, no data leaves your machine
-            - 🤖 Local LLM inference via Transformers.js (DistilBERT + MiniLM)
+            ### Downloads
+
+            | Package | Use Case |
+            |---------|----------|
+            | `aeo-score-calculator-store.zip` | Upload to Chrome Web Store |
+            | `aeo-score-calculator-sideload.crx` | Direct install via drag-and-drop |
+            | `aeo-score-calculator-sideload.zip` | Load unpacked (developer mode) |
 
             ### Installation
-            1. Unzip `aeo-score-calculator.zip`
+
+            **Chrome Web Store**
+            1. Upload `aeo-score-calculator-store.zip` to the Chrome Web Store Developer Dashboard
+
+            **Sideloading (CRX)**
+            1. Download `aeo-score-calculator-sideload.crx`
+            2. Drag the `.crx` file onto `chrome://extensions/`
+
+            **Developer Mode (Unpacked)**
+            1. Unzip `aeo-score-calculator-sideload.zip`
             2. Open `chrome://extensions/`
             3. Enable **Developer mode**
             4. Click **Load unpacked** and select the unzipped folder
@@ -69,8 +107,19 @@ jobs:
 
             [Full Changelog](https://github.com/${{ github.repository }}/compare/${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }})
           files: |
-            aeo-score-calculator.zip
+            aeo-score-calculator-store.zip
+            aeo-score-calculator-sideload.zip
           draft: false
           prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Attach CRX to Release
+        if: steps.crx-check.outputs.has_key == 'true' && (startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }}
+          files: |
+            aeo-score-calculator-sideload.crx
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -33,7 +33,10 @@
     "preview": "vite preview",
     "test": "vitest",
     "test:run": "vitest run",
-    "download-models": "bun scripts/download-models.ts"
+    "download-models": "bun scripts/download-models.ts",
+    "pack:store": "bun run build && cd dist && zip -r ../aeo-score-calculator-store.zip . && cd ..",
+    "pack:crx": "bun run build && npx crx pack dist",
+    "pack": "bun run build && bun run pack:store && bun run pack:crx"
   },
   "dependencies": {
     "@xenova/transformers": "^2.17.2",
