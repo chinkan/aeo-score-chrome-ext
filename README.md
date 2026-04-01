@@ -266,20 +266,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📄 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🏷 Recommended Repository Topics
-
-Add these topics to your GitHub repository for maximum discoverability:
-
-```
-aeo, seo, geo, llmo, answer-engine-optimization, generative-engine-optimization, llm-optimization, chrome-extension, manifest-v3, transformers-js, privacy-first, local-llm, content-optimization, react-extension, typescript, vite, eeat, ai-search, search-engine-optimization, web-optimization
-```
-
-**Why these topics?**
-- **Core keywords** (`aeo`, `seo`, `geo`, `llmo`) — match what developers search for
-- **Full terms** (`answer-engine-optimization`, `generative-engine-optimization`) — catch long-tail searches
-- **Tech stack** (`chrome-extension`, `manifest-v3`, `transformers-js`, `react-extension`) — attract developers
-- **Use case** (`privacy-first`, `local-llm`, `content-optimization`) — attract end users
-- **Related** (`eeat`, `ai-search`, `perplexity-optimization`) — catch adjacent searches
