@@ -5,6 +5,8 @@ import { BreakdownBar } from "../components/BreakdownBar";
 import { SuggestionsAccordion } from "../components/SuggestionsAccordion";
 import { LoadingState } from "../components/LoadingState";
 import { ErrorState } from "../components/ErrorState";
+import { generateExportMarkdown, getExportFilename } from "../lib/export-markdown";
+import { Copy, Download, Check } from "lucide-react";
 
 const CATEGORIES: { key: ScoringCategory; label: string; color: string }[] = [
   { key: "aeo", label: "AEO", color: "bg-blue-500" },
@@ -49,6 +51,9 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeCategory, setActiveCategory] = useState<ScoringCategory>("aeo");
+  const [pageUrl, setPageUrl] = useState("");
+  const [analyzedAt, setAnalyzedAt] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const handleAnalyze = useCallback(async () => {
     setLoading(true);
@@ -64,6 +69,9 @@ export default function App() {
       }
       if (response.data) {
         setResult(response.data);
+        setAnalyzedAt(new Date().toISOString());
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        setPageUrl(tab?.url ?? "");
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unknown error occurred");
@@ -71,6 +79,27 @@ export default function App() {
       setLoading(false);
     }
   }, []);
+
+  const handleCopyMarkdown = useCallback(async () => {
+    if (!result) return;
+    const md = generateExportMarkdown(result, pageUrl, analyzedAt);
+    await navigator.clipboard.writeText(md);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }, [result, pageUrl, analyzedAt]);
+
+  const handleDownloadMarkdown = useCallback(() => {
+    if (!result) return;
+    const md = generateExportMarkdown(result, pageUrl, analyzedAt);
+    const filename = getExportFilename(pageUrl, analyzedAt);
+    const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [result, pageUrl, analyzedAt]);
 
   if (loading) return <LoadingState />;
   if (error) return <ErrorState message={error} onRetry={handleAnalyze} />;
@@ -100,9 +129,25 @@ export default function App() {
       <div className="p-4 bg-white border-b border-gray-200">
         <div className="flex items-center justify-between mb-3">
           <h1 className="text-lg font-bold text-gray-900">Optimization Score</h1>
-          <button onClick={handleAnalyze} className="text-xs text-blue-600 hover:text-blue-700 font-medium">
-            Re-analyze
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={handleCopyMarkdown}
+              title="Copy report to clipboard"
+              className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            >
+              {copied ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
+            </button>
+            <button
+              onClick={handleDownloadMarkdown}
+              title="Download report as Markdown"
+              className="p-1 text-gray-400 hover:text-blue-600 transition-colors"
+            >
+              <Download size={14} />
+            </button>
+            <button onClick={handleAnalyze} className="text-xs text-blue-600 hover:text-blue-700 font-medium">
+              Re-analyze
+            </button>
+          </div>
         </div>
 
         <div className="flex gap-1 mb-3 bg-gray-100 rounded-lg p-1">
