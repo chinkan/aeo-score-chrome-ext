@@ -58,9 +58,9 @@ jobs:
         if: steps.crx-check.outputs.has_key == 'true'
         run: |
           echo "$CRX_PRIVATE_KEY" > crx-key.pem
-          npx --yes crx pack dist \
-            --key crx-key.pem \
-            --crx-output aeo-score-calculator-sideload.crx
+          npx --yes crx3 dist \
+            --keyPath crx-key.pem \
+            --crxPath aeo-score-calculator-sideload.crx
           rm crx-key.pem
         env:
           CRX_PRIVATE_KEY: ${{ secrets.CRX_PRIVATE_KEY }}
