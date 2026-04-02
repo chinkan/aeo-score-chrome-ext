@@ -21,8 +21,8 @@ function r(value: number): number {
   return Math.round(value);
 }
 
-function escapeHtml(text: string): string {
-  return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+function escapeHtmlTags(text: string): string {
+  return text.replace(/<\/?([a-zA-Z][a-zA-Z0-9]*)[^>]*>/g, "`$&`");
 }
 
 function collectSuggestions(result: AnalysisResult): Suggestion[] {
@@ -54,8 +54,8 @@ function renderSuggestionGroup(
     lines.push(`No ${emptyLabel} issues found.`);
   } else {
     for (const s of filtered) {
-      const msg = escapeHtml(s.message);
-      const action = s.action ? ` \u2014 ${escapeHtml(s.action)}` : "";
+      const msg = escapeHtmlTags(s.message);
+      const action = s.action ? ` \u2014 ${escapeHtmlTags(s.action)}` : "";
       lines.push(`- **${msg}**${action}`);
     }
   }

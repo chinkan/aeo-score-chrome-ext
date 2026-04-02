@@ -201,11 +201,11 @@ describe("generateExportMarkdown", () => {
 
     const md = generateExportMarkdown(result, TEST_URL, TEST_TIMESTAMP);
 
-    expect(md).toContain("&lt;article&gt;");
-    expect(md).toContain("&lt;section&gt;");
-    expect(md).toContain("&lt;title&gt;");
-    expect(md).not.toContain("<article>");
-    expect(md).not.toContain("<title>");
+    expect(md).toContain("`<article>`");
+    expect(md).toContain("`<section>`");
+    expect(md).toContain("`<title>`");
+    expect(md).not.toMatch(/(?<!`)<article>(?!`)/);
+    expect(md).not.toMatch(/(?<!`)<title>(?!`)/);
   });
 });
 
