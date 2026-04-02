@@ -21,6 +21,10 @@ function r(value: number): number {
   return Math.round(value);
 }
 
+function escapeHtml(text: string): string {
+  return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function collectSuggestions(result: AnalysisResult): Suggestion[] {
   const seen = new Set<string>();
   const all: Suggestion[] = [];
@@ -50,8 +54,9 @@ function renderSuggestionGroup(
     lines.push(`No ${emptyLabel} issues found.`);
   } else {
     for (const s of filtered) {
-      const action = s.action ? ` \u2014 ${s.action}` : "";
-      lines.push(`- **${s.message}**${action}`);
+      const msg = escapeHtml(s.message);
+      const action = s.action ? ` \u2014 ${escapeHtml(s.action)}` : "";
+      lines.push(`- **${msg}**${action}`);
     }
   }
 

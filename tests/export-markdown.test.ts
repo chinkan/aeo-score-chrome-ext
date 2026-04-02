@@ -188,6 +188,25 @@ describe("generateExportMarkdown", () => {
     expect(md).toContain("**Missing author bio** \u2014 Add author credentials to build EEAT");
     expect(md).toContain("**No FAQ section detected**");
   });
+
+  it("escapes HTML tags in suggestion text so they render in markdown", () => {
+    const result = makeMockResult();
+    result.aeo.suggestions = [
+      { type: "warning", message: "Low semantic HTML usage", action: "Use <article>, <section>, <nav>, <main> tags for better LLM chunking" },
+      { type: "critical", message: "Page has no <title> tag", action: "Add a descriptive <title> tag (50-60 characters)" },
+    ];
+    result.seo.suggestions = [];
+    result.geo.suggestions = [];
+    result.llmo.suggestions = [];
+
+    const md = generateExportMarkdown(result, TEST_URL, TEST_TIMESTAMP);
+
+    expect(md).toContain("&lt;article&gt;");
+    expect(md).toContain("&lt;section&gt;");
+    expect(md).toContain("&lt;title&gt;");
+    expect(md).not.toContain("<article>");
+    expect(md).not.toContain("<title>");
+  });
 });
 
 describe("getExportFilename", () => {
