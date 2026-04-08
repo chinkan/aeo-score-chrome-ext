@@ -88,6 +88,8 @@ describe("generateExportMarkdown", () => {
     expect(md).toContain("## SEO Breakdown");
     expect(md).toContain("## GEO Breakdown");
     expect(md).toContain("## LLMO Breakdown");
+    expect(md).toContain("| CWV | 85/100 |");
+    expect(md).toContain("## Core Web Vitals");
     expect(md).toContain("## Page Metadata");
     expect(md).toContain("## Issues & Suggestions");
     expect(md).toContain("AEO Score Calculator");

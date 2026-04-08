@@ -16,7 +16,12 @@ interface EventTimingEntry extends PerformanceEntry {
 
 // Accumulated CWV values — updated by PerformanceObserver callbacks registered at load time
 let _lcp: number | null = null;
+// CLS: track maximum session-window value (gap ≤1s between shifts, window ≤5s), not a running sum.
+// This matches Chrome's CLS algorithm and prevents overestimating CLS on long pages.
 let _cls: number = 0;
+let _clsCurrentWindowValue: number = 0;
+let _clsWindowStart: number = -Infinity;
+let _clsLastEntryTime: number = -Infinity;
 let _fcp: number | null = null;
 let _ttfb: number | null = null;
 // Map of interactionId → max event duration for that interaction (INP tracks per-interaction)
@@ -50,12 +55,21 @@ function initCWVObservers(): void {
     }).observe({ type: "largest-contentful-paint", buffered: true });
   } catch { /* not supported in this context */ }
 
-  // CLS — accumulate layout shifts that were not preceded by user input
+  // CLS — track the maximum session-window score (shifts within a 1s gap, max 5s total window),
+  // ignoring shifts preceded by user input. This matches Chrome's official CLS algorithm.
   try {
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries() as LayoutShiftEntry[]) {
         if (!entry.hadRecentInput) {
-          _cls += entry.value;
+          const t = entry.startTime;
+          // Start a new session window when gap > 1s or window duration > 5s
+          if (t - _clsLastEntryTime > 1000 || t - _clsWindowStart > 5000) {
+            _clsCurrentWindowValue = 0;
+            _clsWindowStart = t;
+          }
+          _clsLastEntryTime = t;
+          _clsCurrentWindowValue += entry.value;
+          _cls = Math.max(_cls, _clsCurrentWindowValue);
         }
       }
     }).observe({ type: "layout-shift", buffered: true });

@@ -1,4 +1,4 @@
-import type { AnalysisResult, Suggestion, CWVResult } from "./types";
+import type { AnalysisResult, Suggestion } from "./types";
 
 interface ScoreRating {
   emoji: string;
@@ -88,7 +88,7 @@ export function generateExportMarkdown(
   const seo = result.seo;
   const geo = result.geo;
   const llmo = result.llmo;
-  const cwv = result.cwv as CWVResult;
+  const cwv = result.cwv;
 
   const schemaDisplay = meta?.hasSchema
     ? `\u2705 (${meta.schemaTypes?.length ? meta.schemaTypes.join(", ") : "detected"})`
