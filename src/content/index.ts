@@ -21,9 +21,16 @@ let _fcp: number | null = null;
 let _ttfb: number | null = null;
 // Map of interactionId → max event duration for that interaction (INP tracks per-interaction)
 const _inpInteractions = new Map<number, number>();
+// Fallback: first-input captures the very first discrete interaction without needing interactionId
+let _firstInputDuration: number | null = null;
 
 function computeINP(): number | null {
-  if (_inpInteractions.size === 0) return null;
+  if (_inpInteractions.size === 0) {
+    // Fall back to first-input duration when no interactionId-tagged events were observed.
+    // This happens in Chrome versions that don't assign interactionId, or when only one
+    // interaction has occurred (first-input is always reliable and doesn't need interactionId).
+    return _firstInputDuration;
+  }
   const durations = [..._inpInteractions.values()].sort((a, b) => a - b);
   const idx = Math.max(0, Math.min(Math.ceil(durations.length * 0.98) - 1, durations.length - 1));
   return durations[idx] ?? null;
@@ -86,6 +93,19 @@ function initCWVObservers(): void {
         }
       }
     }).observe({ type: "event", buffered: true, durationThreshold: 16 } as PerformanceObserverInit);
+  } catch { /* not supported */ }
+
+  // first-input — reliable fallback for the first discrete user interaction.
+  // Supported since Chrome 73+ and does not require interactionId, making it a robust
+  // safety net when the event observer fails to capture interactionId-tagged entries.
+  try {
+    new PerformanceObserver((list) => {
+      for (const entry of list.getEntries() as EventTimingEntry[]) {
+        if (_firstInputDuration === null || entry.duration > _firstInputDuration) {
+          _firstInputDuration = entry.duration;
+        }
+      }
+    }).observe({ type: "first-input", buffered: true });
   } catch { /* not supported */ }
 }
 

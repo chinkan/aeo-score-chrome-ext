@@ -92,8 +92,8 @@ function generateCWVSuggestions(
   if (raw.inp === null) {
     suggestions.push({
       type: "info",
-      message: "INP not measured — no user interactions captured yet",
-      action: "Interact with the page (click buttons, type, scroll) then re-analyze to measure Interaction to Next Paint",
+      message: "INP not measured — no discrete user interactions captured yet",
+      action: "Click a button or link, or press a key on this page, then re-analyze to measure Interaction to Next Paint (scrolling alone does not count)",
     });
   } else if (raw.inp > INP_POOR) {
     suggestions.push({
