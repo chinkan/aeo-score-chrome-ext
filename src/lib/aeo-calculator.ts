@@ -134,66 +134,6 @@ export async function extractContent(html: string): Promise<ExtractedContent> {
   const marketingFluffCount = (mainText.match(/\b(?:revolutionary|game-?changing|cutting-?edge|state-?of-?the-?art|groundbreaking|unprecedented|unparalleled|unmatched|unrivaled|best-?in-?class|world-?class|top-?tier|premier|ultimate|perfect|flawless|incredible|amazing|awesome|fantastic|phenomenal|extraordinary|exceptional|outstanding|remarkable|spectacular|stunning|breathtaking|magnificent|marvelous|wonderful|fabulous|terrific|superb|excellent|brilliant|genius|legendary|iconic|historic|epoch-?making|milestone|pioneering|innovative|disruptive|transformative|paradigm-?shifting|next-?gen(?:eration)?|future-?proof|seamless|frictionless|effortless|intuitive|user-?friendly|plug-?and-?play|turnkey|ready-?to-?use|out-?of-?the-?box|enterprise-?grade|industrial-?strength|mission-?critical|rock-?solid|bulletproof|foolproof|fail-?safe|war-?tested|battle-?tested|proven|trusted|reliable|dependable|consistent|stable|robust|scalable|flexible|agile|adaptive|responsive|dynamic|versatile|multi-?purpose|all-?in-?one|comprehensive|complete|full-?featured|rich|powerful|advanced|sophisticated|complex|intricate|elaborate|detailed|thorough|extensive|wide-?ranging|far-?reaching|broad|vast|immense|enormous|huge|massive|gigantic|colossal|titanic|monumental|epic|grand|majestic|noble|royal|regal|imperial|sovereign|supreme|paramount|preeminent|dominant|leading|foremost|primary|principal|chief|main|key|core|central|fundamental|essential|critical|vital|crucial|pivotal|indispensable|irreplaceable|invaluable|priceless|precious|treasured|cherished|beloved|dear|favorite|preferred|chosen|selected|handpicked|curated|tailored|customized|personalized|bespoke|made-?to-?measure|made-?to-?order|custom-?built|handcrafted|artisanal|boutique|exclusive|limited-?edition|one-?of-?a-?kind|unique|rare|special|distinctive|characteristic|signature|hallmark|defining|quintessential|archetypal|classic|timeless|enduring|lasting|permanent|eternal|everlasting|immortal|undying|deathless|ageless|ancient|antique|vintage|retro|nostalgic|traditional|conventional|orthodox|conservative|established|settled|fixed|firm|solid|steady|stable|secure|safe|protected|guarded|shielded|defended|fortified|reinforced|strengthened|hardened|toughened|tempered|conditioned|trained|prepared|ready|set|poised|positioned|placed|situated|located|stationed|posted|assigned|appointed|designated|named|titled|labeled|tagged|marked|stamped|branded|signed|sealed|delivered|completed|finished|done|accomplished|achieved|attained|reached|gained|obtained|acquired|secured|won|earned|deserved|merited|qualified|eligible|entitled|authorized|permitted|allowed|licensed|certified|accredited|approved|endorsed|sanctioned|backed|supported|sponsored|funded|financed|invested|subsidized|granted|awarded|bestowed|conferred|given|presented|offered|extended|proffered|tendered|submitted|proposed|suggested|recommended|advised|counseled|guided|directed|instructed|taught|educated|trained|coached|mentored|tutored|schooled|drilled|practiced|rehearsed|prepared|readied|equipped|armed|outfitted|fitted|supplied|provided|furnished|stocked|stored|filled|loaded|packed|stuffed|crammed|jammed|crowded|packed|squeezed|compressed|condensed|concentrated|intensified|heightened|amplified|magnified|enlarged|expanded|extended|stretched|spread|widened|broadened|deepened|thickened|strengthened|fortified|reinforced|supported|backed|endorsed|sponsored|funded|financed|invested|contributed|donated|gave|shared|distributed|allocated|assigned|appointed|designated|named|titled|labeled|tagged|marked|stamped|branded|signed|signaled|indicated|pointed|showed|directed|guided|led|steered|navigated|piloted|drove|rode|operated|controlled|managed|ran|handled|dealt|treated|processed|worked|functioned|performed|acted|behaved|reacted|responded|answered|replied|returned|came|arrived|reached|attained|achieved|accomplished|succeeded|won|triumphed|prevailed|overcame|conquered|defeated|beat|surpassed|exceeded|outdid|outperformed|outshone|excelled|shone|glowed|radiated|beamed|smiled|laughed|cried|wept|sobbed|screamed|shouted|yelled|called|spoke|talked|said|told|stated|declared|announced|proclaimed|published|broadcast|transmitted|sent|delivered|transported|carried|bore|held|supported|sustained|maintained|kept|preserved|protected|saved|rescued|helped|assisted|aided|served|supported|backed|endorsed|approved|accepted|welcomed|greeted|met|encountered|faced|confronted|challenged|dared|risked|ventured|attempted|tried|tested|proved|demonstrated|showed|illustrated|explained|described|detailed|outlined|summarized|briefed|reported|documented|recorded|logged|noted|wrote|typed|printed|published|posted|shared|uploaded|downloaded|transferred|moved|copied|pasted|cut|deleted|removed|erased|cleared|cleaned|washed|wiped|swept|mopped|vacuumed|dusted|polished|shined|buffed|scrubbed|scraped|scratched|dug|drilled|bored|pierced|punctured|penetrated|entered|accessed|reached|touched|felt|sensed|detected|noticed|observed|watched|viewed|saw|looked|stared|gazed|glanced|peeked|peered|squinted|blinked|winked|nodded|shook|turned|twisted|rotated|spun|rolled|slid|glid|slipped|skidded|skated|skied|surfed|sailed|rowed|paddled|steered|navigated|guided|led|followed|chased|pursued|hunted|tracked|traced|trailed|shadowed|stalked|lurked|hid|crouched|crawled|crept|sneaked|tiptoed|walked|stepped|strode|marched|paraded|processed|filed|queued|lined|ranked|ranged|rowed|columned|stacked|piled|heaped|mounded|hilled|mountained|peaked|summitted|topped|crowned|headed|led|fronted|fored|aheaded|before|prior|earlier|former|previous|past|old|ancient|antique|vintage|classic|retro|modern|new|fresh|recent|latest|current|present|today|now|instant|immediate|quick|fast|rapid|swift|speedy|hasty|rushed|hurried|urgent|pressing|critical|crucial|vital|essential|necessary|required|needed|wanted|desired|wished|hoped|expected|anticipated|predicted|forecast|projected|estimated|calculated|computed|measured|weighed|counted|tallied|scored|graded|rated|ranked|sorted|ordered|arranged|organized|structured|formatted|styled|designed|created|made|built|constructed|assembled|manufactured|produced|generated|formed|shaped|molded|cast|forged|hammered|beaten|struck|hit|punched|kicked|thrown|tossed|launched|fired|shot|aimed|pointed|directed|guided|steered|controlled|managed|handled|operated|run|worked|functioned|performed|acted|played|starred|featured|appeared|showed|displayed|exhibited|presented|offered|provided|supplied|delivered|gave|donated|contributed|shared|distributed|spread|scattered|dispersed|diffused|broadcast|transmitted|sent|mailed|posted|shipped|dispatched|forwarded|relayed|passed|handed|transferred|moved|shifted|relocated|transported|carried|borne|held|kept|retained|maintained|preserved|saved|stored|stocked|stockpiled|hoarded|collected|gathered|assembled|accumulated|amassed|compiled|aggregated|combined|merged|united|joined|connected|linked|attached|bound|tied|fastened|secured|locked|sealed|closed|shut|blocked|stopped|halted|paused|delayed|postponed|deferred|suspended|interrupted|broken|cut|split|divided|separated|isolated|detached|disconnected|unlinked|removed|deleted|erased|cleared|wiped|cleaned|washed|scrubbed|polished|shined|buffed|smoothed|flattened|leveled|evened|straightened|aligned|centered|balanced|equalized|matched|compared|contrasted|distinguished|discriminated|selected|chosen|picked|decided|determined|resolved|settled|concluded|judged|evaluated|assessed|appraised|valued|priced|costed|charged|paid|spent|invested|saved|earned|made|gained|profited|benefited|won|succeeded|achieved|accomplished|completed|finished|ended|stopped|quit|left|exited|departed|gone)\b/gi) ?? []).length;
   const boldConceptCount = (html.match(/<(?:strong|b)[\s>]/gi) ?? []).length;
 
-  // --- Credibility (認受性) signals ---
-
-  // Entity density: ratio of proper nouns (capitalized multi-word phrases, known brands, people, orgs)
-  const totalWords = mainText.split(/\s+/).filter(Boolean).length;
-  const properNounPhrases = mainText.match(/\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\b/g) ?? [];
-  const entityDensity = totalWords > 0 ? properNounPhrases.length / (totalWords / 100) : 0;
-  const properNounRatio = totalWords > 0 ? properNounPhrases.length / totalWords : 0;
-
-  // Definition language: "X is", "X refers to", "X means" — Growth Memo research shows 2x more common in cited content
-  const definitionLanguageCount = (mainText.match(/\b[A-Z][A-Za-z\s]{0,30}\b(?:is|are|refers? to|means?|defined as|consists? of|comprises?|entails?|involves?|includes?|describes?|denotes?|signifies?|represents?|characterized by|known as)\b/gi) ?? []).length;
-
-  // Question headings: AI treats H2s as prompts — 78.4% of citations tied to questions come from headings
-  const allHeadings = Array.from(doc.querySelectorAll("h1, h2, h3, h4, h5, h6")).map((h) => h.textContent?.trim() ?? "");
-  const questionHeadings = allHeadings.filter((h) => /\?$/.test(h) || /^(how|what|why|when|where|who|which|can|does|is|are|do|should|will|would|could)\b/i.test(h));
-  const questionHeadingCount = questionHeadings.length;
-  const headingWithQuestionRatio = headingCount > 0 ? questionHeadingCount / headingCount : 0;
-
-  // Author page detection
-  const allLinks = Array.from(doc.querySelectorAll("a[href]")).map((a) => a.getAttribute("href") ?? "");
-  const hasAuthorPage = allLinks.some((href) => /\/author\/|\/about\/author|\/team\/|\/contributors?\/|author\.html|about\.html/i.test(href));
-  const hasAboutPage = allLinks.some((href) => /\/about[\/\-_]?|\/about-us|\/about-?us/i.test(href));
-
-  // Contact info detection
-  const hasContactInfo = /(?:contact\s*(?:us)?|email|phone|tel:|mailto:|\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,})/i.test(html);
-
-  // AI disclosure detection
-  const hasAIDisclosure = /\b(?:AI-?generated|AI-?assisted|artificial intelligence|generated with|written with the help of|AI tool|GPT|Claude|ChatGPT)\b/i.test(html);
-
-  // Editorial policy / privacy policy
-  const hasEditorialPolicy = allLinks.some((href) => /editorial[-_]?policy|editorial[-_]?standards|editorial[-_]?guidelines/i.test(href));
-  const hasPrivacyPolicy = allLinks.some((href) => /privacy[-_]?policy|privacy[-_]?statement|data[-_]?policy/i.test(href));
-
-  // Visible last-updated timestamp
-  const hasLastUpdatedVisible = /(?:last\s*updated|updated\s*on|last\s*modified|revised|refreshed)\s*:?\s*(?:\d{4}[-/]\d{2}[-/]\d{2}|\w+\s+\d{1,2},?\s+\d{4}|\d{1,2}\s+\w+\s+\d{4})/i.test(html);
-
-  // Schema types for E-E-A-T
-  const schemaJson = JSON.stringify(schemaMarkup);
-  const personSchemaPresent = /"Person"/.test(schemaJson);
-  const organizationSchemaPresent = /"Organization"/.test(schemaJson);
-  const articleSchemaPresent = /"Article"/.test(schemaJson) || /"NewsArticle"/.test(schemaJson) || /"BlogPosting"/.test(schemaJson);
-
-  // High-quality external links (.edu, .gov, recognized authority domains)
-  const eduGovLinks = allLinks.filter((href) => /\.(edu|gov)\b/i.test(href)).length;
-  const highQualityExternalLinks = allLinks.filter((href) =>
-    /\.(edu|gov)\b/i.test(href) ||
-    /wikipedia\.org|nih\.gov|who\.int|un\.org|nasa\.gov|nature\.com|science\.org|arxiv\.org|ssrn\.com|ncbi\.nlm\.nih\.gov/i.test(href)
-  ).length;
-
-  // First-person experience signals: "I tested", "we found", "our research", "in our experience"
-  const firstPersonExperience = (mainText.match(/\b(?:I |we |our |my )\b(?:(?:tested|found|discovered|researched|analyzed|measured|observed|noticed|experienced|learned|built|created|developed|designed|implemented|deployed|used|tried|attempted|verified|confirmed|validated|evaluated|assessed|reviewed|examined|investigated|explored|studied|compared|benchmarked|profiled|optimized|improved|fixed|resolved|solved|debugged|troubleshot|patched|updated|upgraded|migrated|refactored|rewrote|restructured|reorganized|reformatted|reformatted|recalculated|recomputed|reanalyzed|reevaluated|reassessed|reexamined|reinvestigated|reexplored|restudied|recompared|rebenchmarked|reprofiled|reoptimized|reimproved|refixed|rereresolved|resolves|resolving|resolvable|resolution|resolutions))\b/gi) ?? []).length;
-
-  // Specific citations: "according to X study", "X research shows", "per X report"
-  const specificCitationCount = (mainText.match(/\b(?:according to|per|as reported by|as noted by|as found by|research from|study by|data from|analysis by|report from|survey by|findings from|evidence from)\s+[A-Z][A-Za-z\s]{1,40}\b/gi) ?? []).length;
-
-  // Unique entity names (brands, tools, organizations, people mentioned)
-  const entityNames = new Set(
-    (mainText.match(/\b(?:Google|Microsoft|Apple|Amazon|Meta|OpenAI|Anthropic|ChatGPT|Perplexity|Claude|Gemini|Copilot|Bing|Firefox|Chrome|Safari|WordPress|Shopify|Stripe|HubSpot|Salesforce|Adobe|Oracle|IBM|Intel|NVIDIA|AMD|Tesla|Netflix|Spotify|Twitter|LinkedIn|Reddit|YouTube|TikTok|Instagram|Facebook|WhatsApp|Telegram|Signal|Slack|Zoom|Notion|Figma|GitHub|GitLab|Bitbucket|Stack Overflow|Wikipedia|Medium|Substack|Quora|Pinterest|Snapchat|Twitch|Discord|Mastodon|Bluesky|Threads|X)\b/g) ?? [])
-  );
-  const entityNameCount = entityNames.size;
-
   return {
     mainText,
     schemaMarkup,
@@ -233,26 +173,6 @@ export async function extractContent(html: string): Promise<ExtractedContent> {
     avgParagraphLength,
     marketingFluffCount,
     boldConceptCount,
-    entityDensity,
-    properNounRatio,
-    definitionLanguageCount,
-    questionHeadingCount,
-    headingWithQuestionRatio,
-    hasAuthorPage,
-    hasAboutPage,
-    hasContactInfo,
-    hasAIDisclosure,
-    hasEditorialPolicy,
-    hasPrivacyPolicy,
-    hasLastUpdatedVisible,
-    personSchemaPresent,
-    organizationSchemaPresent,
-    articleSchemaPresent,
-    highQualityExternalLinks,
-    eduGovLinks,
-    firstPersonExperience,
-    specificCitationCount,
-    entityNameCount,
   };
 }
 
@@ -270,53 +190,11 @@ export function generateSuggestions(
         action: "Add author byline and bio to improve EEAT",
       });
     }
-    if (!content.hasAuthorPage) {
-      suggestions.push({
-        type: "warning",
-        message: "No author page detected",
-        action: "Create a dedicated author page with credentials and link it from articles",
-      });
-    }
     if (content.schemaMarkup.length === 0) {
       suggestions.push({
         type: "warning",
         message: "No structured data found",
         action: "Add JSON-LD schema markup (Article, FAQPage, or HowTo)",
-      });
-    }
-    if (!content.personSchemaPresent && content.metaTags.author) {
-      suggestions.push({
-        type: "warning",
-        message: "Author present but no Person schema",
-        action: "Add Person schema markup with author credentials for machine-readable E-E-A-T",
-      });
-    }
-    if (content.firstPersonExperience === 0) {
-      suggestions.push({
-        type: "info",
-        message: "No first-hand experience signals detected",
-        action: "Add real-world examples, case studies, or personal insights ('I tested', 'we found')",
-      });
-    }
-    if (content.specificCitationCount === 0) {
-      suggestions.push({
-        type: "warning",
-        message: "No specific source citations found",
-        action: "Name specific studies and sources: 'According to SE Ranking's analysis of 129,000 domains'",
-      });
-    }
-    if (content.eduGovLinks === 0 && content.externalLinks === 0) {
-      suggestions.push({
-        type: "info",
-        message: "No external links to authoritative sources",
-        action: "Link to .edu, .gov, or recognized industry sources to build trust",
-      });
-    }
-    if (content.entityNameCount < 3) {
-      suggestions.push({
-        type: "info",
-        message: "Low entity density — few named brands, tools, or organizations",
-        action: "Name specific tools, companies, and people. Cited content averages 20.6% proper nouns vs 5-8% typical",
       });
     }
   }
@@ -363,70 +241,6 @@ export function generateSuggestions(
     });
   }
 
-  if (!content.hasLastUpdatedVisible) {
-    suggestions.push({
-      type: "info",
-      message: "No visible last-updated timestamp",
-      action: "Show a visible 'Last Updated' date — pages with timestamps receive 1.8x more AI citations",
-    });
-  }
-
-  if (content.definitionLanguageCount === 0) {
-    suggestions.push({
-      type: "info",
-      message: "No definition patterns detected",
-      action: "Add clear definitions using 'X is...' or 'X refers to...' patterns — cited content uses definitive language 2x more often",
-    });
-  }
-
-  if (content.questionHeadingCount === 0) {
-    suggestions.push({
-      type: "info",
-      message: "No question-style headings",
-      action: "Use question headings (e.g., 'What is X?') — 78.4% of question-based citations come from headings",
-    });
-  }
-
-  if (!content.hasAboutPage) {
-    suggestions.push({
-      type: "info",
-      message: "No About page detected",
-      action: "Add an About page to establish organizational credibility",
-    });
-  }
-
-  if (!content.hasContactInfo) {
-    suggestions.push({
-      type: "warning",
-      message: "No contact information found",
-      action: "Display contact details (email, phone, or address) for transparency",
-    });
-  }
-
-  if (!content.hasPrivacyPolicy) {
-    suggestions.push({
-      type: "info",
-      message: "No privacy policy detected",
-      action: "Add a privacy policy page for trust and compliance",
-    });
-  }
-
-  if (!content.organizationSchemaPresent) {
-    suggestions.push({
-      type: "info",
-      message: "No Organization schema found",
-      action: "Add Organization schema to establish entity authority for AI systems",
-    });
-  }
-
-  if (!content.articleSchemaPresent && content.wordCount > 300) {
-    suggestions.push({
-      type: "info",
-      message: "No Article schema on long-form content",
-      action: "Add Article schema with author and publisher connections for machine-readable E-E-A-T",
-    });
-  }
-
   if (!content.hasFaq) {
     suggestions.push({
       type: "info",
@@ -448,14 +262,6 @@ export function generateSuggestions(
       type: "warning",
       message: "Content is quite short",
       action: "Expand content to at least 300 words for better coverage",
-    });
-  }
-
-  if (content.marketingFluffCount > 10) {
-    suggestions.push({
-      type: "warning",
-      message: "High marketing language density",
-      action: "Replace superlatives with factual, declarative language — AI favors analyst commentary tone over promotional content",
     });
   }
 

@@ -134,26 +134,4 @@ export interface ExtractedContent {
   avgParagraphLength: number;
   marketingFluffCount: number;
   boldConceptCount: number;
-
-  // Credibility (認受性) fields
-  entityDensity: number;
-  properNounRatio: number;
-  definitionLanguageCount: number;
-  questionHeadingCount: number;
-  headingWithQuestionRatio: number;
-  hasAuthorPage: boolean;
-  hasAboutPage: boolean;
-  hasContactInfo: boolean;
-  hasAIDisclosure: boolean;
-  hasEditorialPolicy: boolean;
-  hasPrivacyPolicy: boolean;
-  hasLastUpdatedVisible: boolean;
-  personSchemaPresent: boolean;
-  organizationSchemaPresent: boolean;
-  articleSchemaPresent: boolean;
-  highQualityExternalLinks: number;
-  eduGovLinks: number;
-  firstPersonExperience: number;
-  specificCitationCount: number;
-  entityNameCount: number;
 }
