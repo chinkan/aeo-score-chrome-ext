@@ -10,18 +10,18 @@
 </p>
 
 <p align="center">
-  <strong>Score your webpage for SEO, GEO, LLMO & AEO — all running 100% locally in your browser.</strong>
+  <strong>Score your webpage for SEO, GEO, LLMO, AEO & Core Web Vitals — all running 100% locally in your browser.</strong>
 </p>
 
 <p align="center">
-  <strong>Keywords:</strong> AEO · SEO · GEO · LLMO · Answer Engine Optimization · Generative Engine Optimization · LLM Optimization · Chrome Extension · Privacy-First · Transformers.js
+  <strong>Keywords:</strong> AEO · SEO · GEO · LLMO · CWV · Answer Engine Optimization · Generative Engine Optimization · LLM Optimization · Core Web Vitals · Chrome Extension · Privacy-First · Transformers.js
 </p>
 
 ---
 
 ## 🚀 What It Does
 
-AEO Score Calculator is a **Chrome Manifest V3 extension** that analyzes any webpage and returns a comprehensive optimization score across **four disciplines**:
+AEO Score Calculator is a **Chrome Manifest V3 extension** that analyzes any webpage and returns a comprehensive optimization score across **five disciplines**:
 
 | Category | Focus | Score Range |
 |----------|-------|-------------|
@@ -29,18 +29,20 @@ AEO Score Calculator is a **Chrome Manifest V3 extension** that analyzes any web
 | **SEO** | Search Engine Optimization (Technical, On-Page, Links, Images) | 0–100 |
 | **GEO** | Generative Engine Optimization (Citations, Statistics, Structured Answers) | 0–100 |
 | **LLMO** | LLM Optimization (Crawlability, Completeness, Direct Answers, Clarity) | 0–100 |
+| **CWV** | Performance (Core Web Vitals: LCP, CLS, INP + supporting metrics: FCP, TTFB — via Performance API) | 0–100 |
 
-An **overall score** combines all four categories into a single number. Each category includes actionable suggestions ranked by severity (critical, warning, info).
+An **overall score** combines all five categories equally (20% each) into a single number. Each category includes actionable suggestions ranked by severity (critical, warning, info).
 
 ---
 
 ## ✨ Features
 
-- **4-in-1 Scoring Engine** — SEO, GEO, LLMO, and AEO scores in a single click
+- **5-in-1 Scoring Engine** — SEO, GEO, LLMO, AEO, and Core Web Vitals scores in a single click
 - **100% Local Processing** — All analysis runs in-browser via Transformers.js. No data leaves your machine
 - **Local LLM Inference** — DistilBERT (sentiment) and MiniLM (embeddings) run locally — no API keys, no network calls
+- **Performance / Web Vitals** — Core Web Vitals (LCP, CLS, INP) and supporting metrics (FCP, TTFB) measured via the browser's Performance API
 - **Actionable Suggestions** — Prioritized recommendations: critical issues, warnings, and improvement tips
-- **Tabbed Dashboard** — Switch between AEO, SEO, GEO, and LLMO views with category-specific breakdowns
+- **Tabbed Dashboard** — Switch between AEO, SEO, GEO, LLMO, and CWV views with category-specific breakdowns
 - **Privacy-First Architecture** — Zero telemetry, zero tracking, zero external requests
 - **Offline-Ready** — Models are bundled locally (~88 MB). Works without an internet connection
 
@@ -51,7 +53,7 @@ An **overall score** combines all four categories into a single number. Each cat
 <p align="center">
   <img src="screenshots/popup.png" alt="AEO Score Calculator popup showing overall score and category tabs" width="380" />
   <br/>
-  <em>Extension popup with AEO/SEO/GEO/LLMO tabs and score breakdown</em>
+  <em>Extension popup with AEO/SEO/GEO/LLMO/CWV tabs and score breakdown</em>
 </p>
 
 ---
@@ -89,7 +91,7 @@ An **overall score** combines all four categories into a single number. Each cat
 1. **Navigate** to any webpage you want to analyze
 2. **Click the extension icon** in your Chrome toolbar
 3. **Click "Analyze Current Page"**
-4. **Switch tabs** to view AEO, SEO, GEO, or LLMO scores
+4. **Switch tabs** to view AEO, SEO, GEO, LLMO, or CWV scores
 5. **Review suggestions** for each category and implement improvements
 
 ### ⌨️ Keyboard Shortcut
@@ -122,12 +124,15 @@ Each category shows sub-scores with their weights:
 **SEO** — Technical (30%), On-Page (35%), Link Profile (20%), Image SEO (15%)
 **GEO** — Citability (30%), Factual Density (25%), Structured Answers (25%), Authority (20%)
 **LLMO** — Crawlability (20%), Completeness (30%), Direct Answers (30%), Clarity (20%)
+**CWV** — LCP (35%), CLS (25%), INP (25%), FCP (10%), TTFB (5%)  *(LCP, CLS, INP are the three official Core Web Vitals; FCP and TTFB are supplementary)*
+
+> **Overall Score** = AEO × 20% + SEO × 20% + GEO × 20% + LLMO × 20% + CWV × 20%
 
 ---
 
-## ✅ AEO Score Validation
+## ✅ Score Validation
 
-The scoring engine uses a combination of **heuristic analysis** and **local LLM inference** to evaluate your page:
+The scoring engine uses a combination of **heuristic analysis**, **local LLM inference**, and the browser **Performance API** to evaluate your page:
 
 ### Heuristic Scoring (No LLM)
 - **EEAT**: Author presence, citations, schema markup, trust signals, content depth
@@ -143,9 +148,15 @@ The scoring engine uses a combination of **heuristic analysis** and **local LLM 
 - **Tone**: DistilBERT sentiment analysis — positive/negative sentiment confidence
 - **Uniqueness**: MiniLM text embeddings — embedding magnitude as uniqueness proxy
 
+### Core Web Vitals + Supporting Metrics (Performance API)
+- **LCP** (Largest Contentful Paint): Measures loading performance — target <2.5s *(Core Web Vital)*
+- **CLS** (Cumulative Layout Shift): Measures visual stability — target <0.1 *(Core Web Vital)*
+- **INP** (Interaction to Next Paint): Measures interactivity — target <200ms *(Core Web Vital)*
+- **FCP** (First Contentful Paint): Measures time to first visible content — target <1.8s *(supporting metric)*
+- **TTFB** (Time to First Byte): Measures server response time — target <800ms *(supporting metric)*
+
 ### What's NOT Scored (Yet)
 - Backlink profile (requires external data)
-- Core Web Vitals (requires Performance API access)
 - Domain authority (requires external data)
 - Social signals (requires external data)
 
@@ -172,7 +183,7 @@ The scoring engine uses a combination of **heuristic analysis** and **local LLM 
 | Priority | Feature | Status |
 |----------|---------|--------|
 | 🔴 High | Chrome Web Store publication | 🚧 In Progress |
-| 🔴 High | Core Web Vitals integration | 📋 Planned |
+| 🔴 High | Core Web Vitals integration | ✅ Done |
 | 🟡 Medium | Historical score tracking | 📋 Planned |
 | 🟡 Medium | Export results as PDF/JSON | 📋 Planned |
 | 🟡 Medium | Batch URL analysis | 📋 Planned |
@@ -228,6 +239,7 @@ The scoring engine uses a combination of **heuristic analysis** and **local LLM 
 │   │   ├── seo-scoring.ts      # SEO scoring module
 │   │   ├── geo-scoring.ts      # GEO scoring module
 │   │   ├── llmo-scoring.ts     # LLMO scoring module
+│   │   ├── cwv-scoring.ts      # Core Web Vitals scoring (LCP, CLS, INP, FCP, TTFB)
 │   │   ├── llm/                # Local LLM inference
 │   │   └── messaging/          # Typed messaging system
 │   └── components/             # React UI components
