@@ -29,7 +29,7 @@ function collectSuggestions(result: AnalysisResult): Suggestion[] {
   const seen = new Set<string>();
   const all: Suggestion[] = [];
 
-  for (const category of [result.aeo, result.seo, result.geo, result.llmo]) {
+  for (const category of [result.aeo, result.seo, result.geo, result.llmo, result.cwv]) {
     for (const s of category.suggestions) {
       if (!seen.has(s.message)) {
         seen.add(s.message);
@@ -88,6 +88,7 @@ export function generateExportMarkdown(
   const seo = result.seo;
   const geo = result.geo;
   const llmo = result.llmo;
+  const cwv = result.cwv;
 
   const schemaDisplay = meta?.hasSchema
     ? `\u2705 (${meta.schemaTypes?.length ? meta.schemaTypes.join(", ") : "detected"})`
@@ -115,7 +116,8 @@ export function generateExportMarkdown(
 | AEO | ${r(aeo.score)}/100 | ${ratingCell(aeo.score)} |
 | SEO | ${r(seo.score)}/100 | ${ratingCell(seo.score)} |
 | GEO | ${r(geo.score)}/100 | ${ratingCell(geo.score)} |
-| LLMO | ${r(llmo.score)}/100 | ${ratingCell(llmo.score)} |`,
+| LLMO | ${r(llmo.score)}/100 | ${ratingCell(llmo.score)} |
+| CWV | ${r(cwv.score)}/100 | ${ratingCell(cwv.score)} |`,
 
     // AEO Breakdown
     `## AEO Breakdown (Score: ${r(aeo.score)}/100)
@@ -154,6 +156,16 @@ export function generateExportMarkdown(
 | Completeness | ${r(llmo.components.completeness)}/100 | 30% |
 | Direct Answers | ${r(llmo.components.direct_answers)}/100 | 30% |
 | Clarity | ${r(llmo.components.clarity)}/100 | 20% |`,
+
+    // CWV Breakdown
+    `## Core Web Vitals (Score: ${r(cwv.score)}/100)
+| Metric | Score | Weight | Raw Value | Threshold |
+|--------|-------|--------|-----------|-----------|
+| LCP (Largest Contentful Paint) | ${r(cwv.components.lcp)}/100 | 35% | ${cwv.raw.lcp !== null ? (cwv.raw.lcp >= 1000 ? `${(cwv.raw.lcp / 1000).toFixed(2)}s` : `${Math.round(cwv.raw.lcp)}ms`) : "N/A"} | Good ≤2.5s |
+| CLS (Cumulative Layout Shift) | ${r(cwv.components.cls)}/100 | 25% | ${cwv.raw.cls.toFixed(3)} | Good ≤0.1 |
+| INP (Interaction to Next Paint) | ${r(cwv.components.inp)}/100 | 25% | ${cwv.raw.inp !== null ? (cwv.raw.inp >= 1000 ? `${(cwv.raw.inp / 1000).toFixed(2)}s` : `${Math.round(cwv.raw.inp)}ms`) : "N/A"} | Good ≤200ms |
+| FCP (First Contentful Paint) | ${r(cwv.components.fcp)}/100 | 10% | ${cwv.raw.fcp !== null ? (cwv.raw.fcp >= 1000 ? `${(cwv.raw.fcp / 1000).toFixed(2)}s` : `${Math.round(cwv.raw.fcp)}ms`) : "N/A"} | Good ≤1.8s |
+| TTFB (Time to First Byte) | ${r(cwv.components.ttfb)}/100 | 5% | ${cwv.raw.ttfb !== null ? (cwv.raw.ttfb >= 1000 ? `${(cwv.raw.ttfb / 1000).toFixed(2)}s` : `${Math.round(cwv.raw.ttfb)}ms`) : "N/A"} | Good ≤800ms |`,
 
     // Page Metadata
     `## Page Metadata

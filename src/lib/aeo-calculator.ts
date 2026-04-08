@@ -19,6 +19,7 @@ import {
 import { calculateSEO } from "./seo-scoring";
 import { calculateGEO } from "./geo-scoring";
 import { calculateLLMO } from "./llmo-scoring";
+import { calculateCWV } from "./cwv-scoring";
 
 export { extractMainText, extractSchemaMarkup, extractMetaTags, getLastUpdated, hasFaqSection, hasHowtoSchema };
 export { calculateEEAT, calculateRelevance, calculateStructure, calculateFreshness, calculateIntentMatch, detectSnippetReady };
@@ -173,6 +174,12 @@ export async function extractContent(html: string): Promise<ExtractedContent> {
     avgParagraphLength,
     marketingFluffCount,
     boldConceptCount,
+    // CWV defaults — overridden by content script via Performance API
+    lcp: null,
+    inp: null,
+    cls: 0,
+    fcp: null,
+    ttfb: null,
   };
 }
 
@@ -324,19 +331,22 @@ export function finalizeAll(
   const seo = calculateSEO(content);
   const geo = calculateGEO(content);
   const llmo = calculateLLMO(content);
+  const cwv = calculateCWV(content);
 
   const allSuggestions = [
     ...aeo.suggestions,
     ...seo.suggestions,
     ...geo.suggestions,
     ...llmo.suggestions,
+    ...cwv.suggestions,
   ];
 
   const overall = Math.round(
-    aeo.score * 0.25 +
-    seo.score * 0.25 +
-    geo.score * 0.25 +
-    llmo.score * 0.25,
+    aeo.score * 0.20 +
+    seo.score * 0.20 +
+    geo.score * 0.20 +
+    llmo.score * 0.20 +
+    cwv.score * 0.20,
   );
 
   return {
@@ -346,6 +356,7 @@ export function finalizeAll(
     seo,
     geo,
     llmo,
+    cwv,
     overall,
   };
 }

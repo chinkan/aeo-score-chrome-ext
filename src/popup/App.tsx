@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import type { AnalysisResult, ScoringCategory, AEOResult, SEOResult, GEOResult, LLMOResult } from "../lib/types";
+import type { AnalysisResult, ScoringCategory, AEOResult, SEOResult, GEOResult, LLMOResult, CWVResult } from "../lib/types";
 import { ScoreRing } from "../components/ScoreRing";
 import { BreakdownBar } from "../components/BreakdownBar";
 import { SuggestionsAccordion } from "../components/SuggestionsAccordion";
@@ -13,11 +13,18 @@ const CATEGORIES: { key: ScoringCategory; label: string; color: string }[] = [
   { key: "seo", label: "SEO", color: "bg-green-500" },
   { key: "geo", label: "GEO", color: "bg-amber-500" },
   { key: "llmo", label: "LLMO", color: "bg-purple-500" },
+  { key: "cwv", label: "CWV", color: "bg-rose-500" },
 ];
 
-type CategoryResult = AEOResult | SEOResult | GEOResult | LLMOResult;
+type CategoryResult = AEOResult | SEOResult | GEOResult | LLMOResult | CWVResult;
 
-const COMPONENT_CONFIG: Record<ScoringCategory, { label: string; weight: number; color: string; value: (r: CategoryResult) => number }[]> = {
+function formatCWVRaw(value: number | null, unit: "ms" | "unitless"): string {
+  if (value === null) return "N/A";
+  if (unit === "ms") return value >= 1000 ? `${(value / 1000).toFixed(1)}s` : `${Math.round(value)}ms`;
+  return value.toFixed(3);
+}
+
+const COMPONENT_CONFIG: Record<ScoringCategory, { label: string; weight: number; color: string; value: (r: CategoryResult) => number; rawLabel?: (r: CategoryResult) => string }[]> = {
   aeo: [
     { label: "EEAT", weight: 40, color: "bg-blue-500", value: (r) => (r as AEOResult).components.eeat },
     { label: "Relevance", weight: 30, color: "bg-green-500", value: (r) => (r as AEOResult).components.relevance },
@@ -43,6 +50,43 @@ const COMPONENT_CONFIG: Record<ScoringCategory, { label: string; weight: number;
     { label: "Completeness", weight: 30, color: "bg-green-500", value: (r) => (r as LLMOResult).components.completeness },
     { label: "Direct Answers", weight: 30, color: "bg-amber-500", value: (r) => (r as LLMOResult).components.direct_answers },
     { label: "Clarity", weight: 20, color: "bg-purple-500", value: (r) => (r as LLMOResult).components.clarity },
+  ],
+  cwv: [
+    {
+      label: "LCP",
+      weight: 35,
+      color: "bg-rose-500",
+      value: (r) => (r as CWVResult).components.lcp,
+      rawLabel: (r) => formatCWVRaw((r as CWVResult).raw.lcp, "ms"),
+    },
+    {
+      label: "CLS",
+      weight: 25,
+      color: "bg-orange-500",
+      value: (r) => (r as CWVResult).components.cls,
+      rawLabel: (r) => formatCWVRaw((r as CWVResult).raw.cls, "unitless"),
+    },
+    {
+      label: "INP",
+      weight: 25,
+      color: "bg-pink-500",
+      value: (r) => (r as CWVResult).components.inp,
+      rawLabel: (r) => formatCWVRaw((r as CWVResult).raw.inp, "ms"),
+    },
+    {
+      label: "FCP",
+      weight: 10,
+      color: "bg-red-400",
+      value: (r) => (r as CWVResult).components.fcp,
+      rawLabel: (r) => formatCWVRaw((r as CWVResult).raw.fcp, "ms"),
+    },
+    {
+      label: "TTFB",
+      weight: 5,
+      color: "bg-red-300",
+      value: (r) => (r as CWVResult).components.ttfb,
+      rawLabel: (r) => formatCWVRaw((r as CWVResult).raw.ttfb, "ms"),
+    },
   ],
 };
 
@@ -179,7 +223,7 @@ export default function App() {
         {configs.map((cfg) => (
           <BreakdownBar
             key={cfg.label}
-            label={cfg.label}
+            label={cfg.rawLabel ? `${cfg.label} ${cfg.rawLabel(categoryResult)}` : cfg.label}
             value={cfg.value(categoryResult)}
             weight={cfg.weight}
             color={cfg.color}
@@ -193,9 +237,11 @@ export default function App() {
 
       <div className="px-4 pb-4">
         <div className="text-xs text-gray-400 text-center">
-          {("meta" in categoryResult && (categoryResult as AEOResult).meta?.wordCount)
-            ? `${(categoryResult as AEOResult).meta.wordCount} words · ${(categoryResult as AEOResult).meta.headingCount} headings · ${(categoryResult as AEOResult).meta.hasSchema ? "Schema ✓" : "No schema"}`
-            : `${result.aeo.meta.wordCount} words · ${result.aeo.meta.headingCount} headings`}
+          {activeCategory === "cwv"
+            ? "Core Web Vitals measured from real page performance"
+            : ("meta" in categoryResult && (categoryResult as AEOResult).meta?.wordCount)
+              ? `${(categoryResult as AEOResult).meta.wordCount} words · ${(categoryResult as AEOResult).meta.headingCount} headings · ${(categoryResult as AEOResult).meta.hasSchema ? "Schema ✓" : "No schema"}`
+              : `${result.aeo.meta.wordCount} words · ${result.aeo.meta.headingCount} headings`}
         </div>
       </div>
     </div>

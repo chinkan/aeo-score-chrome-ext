@@ -2,7 +2,7 @@
  * Shared types for the AEO Score Calculator extension.
  */
 
-export type ScoringCategory = "aeo" | "seo" | "geo" | "llmo";
+export type ScoringCategory = "aeo" | "seo" | "geo" | "llmo" | "cwv";
 
 export interface Suggestion {
   type: "critical" | "warning" | "info";
@@ -39,6 +39,29 @@ export interface LLMOComponents {
   completeness: number;
   direct_answers: number;
   clarity: number;
+}
+
+export interface CWVComponents {
+  lcp: number;
+  inp: number;
+  cls: number;
+  fcp: number;
+  ttfb: number;
+}
+
+export interface CWVRaw {
+  lcp: number | null;
+  inp: number | null;
+  cls: number;
+  fcp: number | null;
+  ttfb: number | null;
+}
+
+export interface CWVResult {
+  score: number;
+  components: CWVComponents;
+  suggestions: Suggestion[];
+  raw: CWVRaw;
 }
 
 export interface AEOMeta {
@@ -86,6 +109,7 @@ export interface AnalysisResult {
   seo: SEOResult;
   geo: GEOResult;
   llmo: LLMOResult;
+  cwv: CWVResult;
   overall: number;
 }
 
@@ -134,4 +158,11 @@ export interface ExtractedContent {
   avgParagraphLength: number;
   marketingFluffCount: number;
   boldConceptCount: number;
+
+  // CWV fields
+  lcp: number | null;
+  inp: number | null;
+  cls: number;
+  fcp: number | null;
+  ttfb: number | null;
 }
