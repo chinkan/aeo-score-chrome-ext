@@ -9,7 +9,7 @@ export default defineManifest({
   name: "AEO Score Calculator",
   version: `${major}.${minor}.${patch}`,
   description: "Calculate Answer Engine Optimization scores for any webpage",
-  permissions: ["activeTab", "scripting", "offscreen"],
+  permissions: ["activeTab", "offscreen"],
   host_permissions: ["<all_urls>"],
   action: {
     default_popup: "popup.html",
