@@ -203,9 +203,10 @@ describe("calculateCWV", () => {
   it("generates info suggestion when all CWV metrics not measurable", () => {
     const result = calculateCWV(baseContent);
     const infoSuggestions = result.suggestions.filter((s) => s.type === "info");
-    expect(infoSuggestions.some((s) => s.message.includes("LCP could not be measured"))).toBe(true);
-    expect(infoSuggestions.some((s) => s.message.includes("FCP could not be measured"))).toBe(true);
-    expect(infoSuggestions.some((s) => s.message.includes("TTFB could not be measured"))).toBe(true);
+    expect(infoSuggestions.some((s) => s.message.includes("LCP not available"))).toBe(true);
+    expect(infoSuggestions.some((s) => s.message.includes("INP not measured"))).toBe(true);
+    expect(infoSuggestions.some((s) => s.message.includes("FCP not available"))).toBe(true);
+    expect(infoSuggestions.some((s) => s.message.includes("TTFB not available"))).toBe(true);
   });
 
   it("preserves raw metrics in result", () => {

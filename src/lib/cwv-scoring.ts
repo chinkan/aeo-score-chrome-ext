@@ -72,8 +72,8 @@ function generateCWVSuggestions(
   if (raw.lcp === null) {
     suggestions.push({
       type: "info",
-      message: "LCP could not be measured",
-      action: "Re-analyze immediately after the page finishes loading to capture Largest Contentful Paint",
+      message: "LCP not available — no suitable content element found",
+      action: "Ensure the page has a visible large image or text block above the fold that can serve as the Largest Contentful Paint element",
     });
   } else if (raw.lcp > LCP_POOR) {
     suggestions.push({
@@ -89,13 +89,19 @@ function generateCWVSuggestions(
     });
   }
 
-  if (raw.inp !== null && raw.inp > INP_POOR) {
+  if (raw.inp === null) {
+    suggestions.push({
+      type: "info",
+      message: "INP not measured — no user interactions captured yet",
+      action: "Interact with the page (click buttons, type, scroll) then re-analyze to measure Interaction to Next Paint",
+    });
+  } else if (raw.inp > INP_POOR) {
     suggestions.push({
       type: "critical",
       message: `INP is ${formatMs(raw.inp)} — Poor (target: <200ms)`,
       action: "Break up long JavaScript tasks using setTimeout or requestIdleCallback, remove heavy third-party scripts, and minimize DOM size",
     });
-  } else if (raw.inp !== null && raw.inp > INP_GOOD) {
+  } else if (raw.inp > INP_GOOD) {
     suggestions.push({
       type: "warning",
       message: `INP is ${formatMs(raw.inp)} — Needs Improvement (target: <200ms)`,
@@ -120,8 +126,8 @@ function generateCWVSuggestions(
   if (raw.fcp === null) {
     suggestions.push({
       type: "info",
-      message: "FCP could not be measured",
-      action: "Re-analyze immediately after the page finishes loading to capture First Contentful Paint",
+      message: "FCP not available — paint timing not supported on this page",
+      action: "Ensure the page renders visible content and is not blocked by cross-origin restrictions",
     });
   } else if (raw.fcp > FCP_POOR) {
     suggestions.push({
@@ -140,8 +146,8 @@ function generateCWVSuggestions(
   if (raw.ttfb === null) {
     suggestions.push({
       type: "info",
-      message: "TTFB could not be measured",
-      action: "Re-analyze immediately after the page finishes loading to capture Time to First Byte",
+      message: "TTFB not available — navigation timing not accessible on this page",
+      action: "Ensure the page is loaded via a full navigation (not in an iframe) to capture Time to First Byte",
     });
   } else if (raw.ttfb > TTFB_POOR) {
     suggestions.push({
@@ -157,7 +163,14 @@ function generateCWVSuggestions(
     });
   }
 
-  if (components.lcp === 100 && components.inp === 100 && components.cls === 100 && components.fcp === 100 && components.ttfb === 100) {
+  // Show "all good" when every measurable vital is in the Good range
+  const measuredAreGood =
+    (raw.lcp === null || components.lcp === 100) &&
+    (raw.cls <= CLS_GOOD) &&
+    (raw.fcp === null || components.fcp === 100) &&
+    (raw.ttfb === null || components.ttfb === 100);
+  const hasAtLeastOneMeasured = raw.lcp !== null || raw.fcp !== null || raw.ttfb !== null;
+  if (measuredAreGood && hasAtLeastOneMeasured && (raw.inp === null || components.inp === 100)) {
     suggestions.push({
       type: "info",
       message: "All Core Web Vitals are in the Good range 🎉",
