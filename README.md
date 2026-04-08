@@ -29,7 +29,7 @@ AEO Score Calculator is a **Chrome Manifest V3 extension** that analyzes any web
 | **SEO** | Search Engine Optimization (Technical, On-Page, Links, Images) | 0–100 |
 | **GEO** | Generative Engine Optimization (Citations, Statistics, Structured Answers) | 0–100 |
 | **LLMO** | LLM Optimization (Crawlability, Completeness, Direct Answers, Clarity) | 0–100 |
-| **CWV** | Core Web Vitals (LCP, CLS, INP, FCP, TTFB — via Performance API) | 0–100 |
+| **CWV** | Performance (Core Web Vitals: LCP, CLS, INP + supporting metrics: FCP, TTFB — via Performance API) | 0–100 |
 
 An **overall score** combines all five categories equally (20% each) into a single number. Each category includes actionable suggestions ranked by severity (critical, warning, info).
 
@@ -40,7 +40,7 @@ An **overall score** combines all five categories equally (20% each) into a sing
 - **5-in-1 Scoring Engine** — SEO, GEO, LLMO, AEO, and Core Web Vitals scores in a single click
 - **100% Local Processing** — All analysis runs in-browser via Transformers.js. No data leaves your machine
 - **Local LLM Inference** — DistilBERT (sentiment) and MiniLM (embeddings) run locally — no API keys, no network calls
-- **Core Web Vitals** — Real performance metrics (LCP, CLS, INP, FCP, TTFB) measured via the browser's Performance API
+- **Performance / Web Vitals** — Core Web Vitals (LCP, CLS, INP) and supporting metrics (FCP, TTFB) measured via the browser's Performance API
 - **Actionable Suggestions** — Prioritized recommendations: critical issues, warnings, and improvement tips
 - **Tabbed Dashboard** — Switch between AEO, SEO, GEO, LLMO, and CWV views with category-specific breakdowns
 - **Privacy-First Architecture** — Zero telemetry, zero tracking, zero external requests
@@ -124,15 +124,15 @@ Each category shows sub-scores with their weights:
 **SEO** — Technical (30%), On-Page (35%), Link Profile (20%), Image SEO (15%)
 **GEO** — Citability (30%), Factual Density (25%), Structured Answers (25%), Authority (20%)
 **LLMO** — Crawlability (20%), Completeness (30%), Direct Answers (30%), Clarity (20%)
-**CWV** — LCP (35%), CLS (25%), INP (25%), FCP (10%), TTFB (5%)
+**CWV** — LCP (35%), CLS (25%), INP (25%), FCP (10%), TTFB (5%)  *(LCP, CLS, INP are the three official Core Web Vitals; FCP and TTFB are supplementary)*
 
 > **Overall Score** = AEO × 20% + SEO × 20% + GEO × 20% + LLMO × 20% + CWV × 20%
 
 ---
 
-## ✅ AEO Score Validation
+## ✅ Score Validation
 
-The scoring engine uses a combination of **heuristic analysis** and **local LLM inference** to evaluate your page:
+The scoring engine uses a combination of **heuristic analysis**, **local LLM inference**, and the browser **Performance API** to evaluate your page:
 
 ### Heuristic Scoring (No LLM)
 - **EEAT**: Author presence, citations, schema markup, trust signals, content depth
@@ -148,12 +148,12 @@ The scoring engine uses a combination of **heuristic analysis** and **local LLM 
 - **Tone**: DistilBERT sentiment analysis — positive/negative sentiment confidence
 - **Uniqueness**: MiniLM text embeddings — embedding magnitude as uniqueness proxy
 
-### Core Web Vitals (Performance API)
-- **LCP** (Largest Contentful Paint): Measures loading performance — target <2.5s
-- **CLS** (Cumulative Layout Shift): Measures visual stability — target <0.1
-- **INP** (Interaction to Next Paint): Measures interactivity — target <200ms
-- **FCP** (First Contentful Paint): Measures time to first visible content — target <1.8s
-- **TTFB** (Time to First Byte): Measures server response time — target <800ms
+### Core Web Vitals + Supporting Metrics (Performance API)
+- **LCP** (Largest Contentful Paint): Measures loading performance — target <2.5s *(Core Web Vital)*
+- **CLS** (Cumulative Layout Shift): Measures visual stability — target <0.1 *(Core Web Vital)*
+- **INP** (Interaction to Next Paint): Measures interactivity — target <200ms *(Core Web Vital)*
+- **FCP** (First Contentful Paint): Measures time to first visible content — target <1.8s *(supporting metric)*
+- **TTFB** (Time to First Byte): Measures server response time — target <800ms *(supporting metric)*
 
 ### What's NOT Scored (Yet)
 - Backlink profile (requires external data)
