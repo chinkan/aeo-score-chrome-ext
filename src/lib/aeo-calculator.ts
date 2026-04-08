@@ -9,7 +9,6 @@ import {
   detectSnippetReady,
 } from "./aeo-scoring";
 import {
-  fetchHtml,
   extractMainText,
   extractSchemaMarkup,
   extractMetaTags,
@@ -21,7 +20,7 @@ import { calculateSEO } from "./seo-scoring";
 import { calculateGEO } from "./geo-scoring";
 import { calculateLLMO } from "./llmo-scoring";
 
-export { fetchHtml, extractMainText, extractSchemaMarkup, extractMetaTags, getLastUpdated, hasFaqSection, hasHowtoSchema };
+export { extractMainText, extractSchemaMarkup, extractMetaTags, getLastUpdated, hasFaqSection, hasHowtoSchema };
 export { calculateEEAT, calculateRelevance, calculateStructure, calculateFreshness, calculateIntentMatch, detectSnippetReady };
 export { clamp } from "./utils";
 

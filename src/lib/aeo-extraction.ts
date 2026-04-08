@@ -1,27 +1,3 @@
-export function fetchHtml(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      if (!tabs[0]?.id) {
-        reject(new Error("No active tab found"));
-        return;
-      }
-      chrome.scripting.executeScript(
-        {
-          target: { tabId: tabs[0].id! },
-          func: () => document.documentElement.outerHTML,
-        },
-        (results) => {
-          if (chrome.runtime.lastError) {
-            reject(new Error(chrome.runtime.lastError.message));
-            return;
-          }
-          resolve(results?.[0]?.result as string ?? "");
-        },
-      );
-    });
-  });
-}
-
 export function extractMainText(html: string): string {
   const parser = new DOMParser();
   const doc = parser.parseFromString(html, "text/html");
