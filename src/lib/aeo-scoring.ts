@@ -2,24 +2,57 @@ import { clamp } from "./utils";
 import type { ExtractedContent } from "./types";
 
 export function calculateEEAT(content: ExtractedContent): number {
-  let score = 0;
+  // --- Experience (25%) ---
+  let experienceScore = 0;
+  if (content.firstPersonExperience >= 2) experienceScore += 0.35;
+  else if (content.firstPersonExperience >= 1) experienceScore += 0.2;
+  if (content.specificCitationCount >= 3) experienceScore += 0.25;
+  else if (content.specificCitationCount >= 1) experienceScore += 0.1;
+  if (content.quotationCount > 0) experienceScore += 0.15;
+  if (content.statisticCount >= 5) experienceScore += 0.15;
+  else if (content.statisticCount >= 2) experienceScore += 0.1;
+  if (content.hasStepByStep) experienceScore += 0.1;
 
-  if (content.metaTags.author) score += 0.25;
-
-  const hasCitations = /references|sources|bibliography|cited|according to/i.test(content.mainText);
-  if (hasCitations) score += 0.2;
-
-  const hasExternalLinks = content.linkCount > 3;
-  if (hasExternalLinks) score += 0.15;
-
-  if (content.schemaMarkup.length > 0) score += 0.15;
-
+  // --- Expertise (25%) ---
+  let expertiseScore = 0;
+  if (content.metaTags.author) expertiseScore += 0.2;
+  if (content.hasAuthorPage) expertiseScore += 0.15;
+  if (content.personSchemaPresent) expertiseScore += 0.15;
   const hasAuthorBio = /about the author|written by|by\s+\w+|author bio/i.test(content.mainText);
-  if (hasAuthorBio) score += 0.15;
+  if (hasAuthorBio) expertiseScore += 0.15;
+  if (content.definitionLanguageCount >= 3) expertiseScore += 0.1;
+  const hasCitations = /references|sources|bibliography|cited|according to/i.test(content.mainText);
+  if (hasCitations) expertiseScore += 0.1;
+  const wordCountBonus = clamp(content.wordCount / 1500, 0, 0.15);
+  expertiseScore += wordCountBonus;
 
-  const wordCountBonus = clamp(content.wordCount / 1500, 0, 0.1);
-  score += wordCountBonus;
+  // --- Authoritativeness (25%) ---
+  let authorityScore = 0;
+  if (content.eduGovLinks >= 2) authorityScore += 0.25;
+  else if (content.eduGovLinks >= 1) authorityScore += 0.15;
+  if (content.highQualityExternalLinks >= 3) authorityScore += 0.2;
+  else if (content.highQualityExternalLinks >= 1) authorityScore += 0.1;
+  if (content.externalLinks >= 3) authorityScore += 0.15;
+  if (content.organizationSchemaPresent) authorityScore += 0.15;
+  if (content.articleSchemaPresent) authorityScore += 0.1;
+  if (content.entityNameCount >= 5) authorityScore += 0.1;
+  else if (content.entityNameCount >= 2) authorityScore += 0.05;
 
+  // --- Trustworthiness (25%) ---
+  let trustScore = 0;
+  if (content.hasContactInfo) trustScore += 0.15;
+  if (content.hasAboutPage) trustScore += 0.1;
+  if (content.hasLastUpdatedVisible) trustScore += 0.15;
+  if (content.hasPrivacyPolicy) trustScore += 0.1;
+  if (content.hasEditorialPolicy) trustScore += 0.1;
+  if (content.schemaMarkup.length > 0) trustScore += 0.1;
+  if (content.hasHttps) trustScore += 0.05;
+  if (content.hasAIDisclosure) trustScore += 0.05;
+  if (content.hasViewport) trustScore += 0.05;
+  if (content.canonicalUrl) trustScore += 0.1;
+  if (content.semanticHtmlScore >= 0.5) trustScore += 0.05;
+
+  const score = experienceScore * 0.25 + expertiseScore * 0.25 + authorityScore * 0.25 + trustScore * 0.25;
   return clamp(score, 0, 1);
 }
 
