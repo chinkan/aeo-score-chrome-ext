@@ -14,6 +14,12 @@
 </p>
 
 <p align="center">
+  <a href="https://chromewebstore.google.com/detail/aeo-score-calculator/idmcaaobeleckilidnpagidhdfpdgmhp">
+    <img src="https://img.shields.io/chrome-web-store/v/idmcaaobeleckilidnpagidhdfpdgmhp?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white&style=for-the-badge" alt="Install from Chrome Web Store" />
+  </a>
+</p>
+
+<p align="center">
   <strong>Keywords:</strong> AEO · SEO · GEO · LLMO · CWV · Answer Engine Optimization · Generative Engine Optimization · LLM Optimization · Core Web Vitals · Chrome Extension · Privacy-First · Transformers.js
 </p>
 
@@ -60,7 +66,14 @@ An **overall score** combines all five categories equally (20% each) into a sing
 
 ## 📦 Installation
 
-### Option 1: Load Unpacked (Recommended for Development)
+### Option 1: Chrome Web Store (recommended)
+
+1. Open the **[AEO Score Calculator](https://chromewebstore.google.com/detail/aeo-score-calculator/idmcaaobeleckilidnpagidhdfpdgmhp)** listing on the Chrome Web Store.
+2. Click **Add to Chrome** and confirm the installation.
+
+Updates install automatically when new versions are published to the store.
+
+### Option 2: Load Unpacked (development)
 
 1. **Clone the repository**
    ```bash
@@ -79,10 +92,6 @@ An **overall score** combines all five categories equally (20% each) into a sing
    - Enable **Developer mode** (top-right toggle)
    - Click **Load unpacked**
    - Select the `dist/` folder
-
-### Option 2: Chrome Web Store
-
-> 🚧 Coming soon. Subscribe to this repo for release notifications.
 
 ---
 
@@ -182,7 +191,7 @@ The scoring engine uses a combination of **heuristic analysis**, **local LLM inf
 
 | Priority | Feature | Status |
 |----------|---------|--------|
-| 🔴 High | Chrome Web Store publication | 🚧 In Progress |
+| 🔴 High | Chrome Web Store publication | ✅ Done |
 | 🔴 High | Core Web Vitals integration | ✅ Done |
 | 🟡 Medium | Historical score tracking | 📋 Planned |
 | 🟡 Medium | Export results as PDF/JSON | 📋 Planned |
