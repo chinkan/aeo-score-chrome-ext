@@ -33,7 +33,7 @@ Chrome extension that calculates AEO scores for webpages. Uses local LLM (`@xeno
 |------|----------|-------|
 | Service worker | `src/background/` | DOM-free, message routing only |
 | DOM analysis | `src/content/` | Main content extraction, 19 scoring funcs |
-| LLM inference | `src/offscreen/` | Transformers.js (DistilBERT + MiniLM) |
+| LLM inference | `src/offscreen/` | Transformers.js (multilingual BERT sentiment + MiniLM) |
 | Popup UI | `src/popup/` | React 19, ~380×520px |
 | Scoring logic | `src/lib/aeo-calculator.ts` | EEAT, Relevance, Structure, Freshness |
 | Types/interfaces | `src/lib/` | AEOResult, Suggestion, component scores |
@@ -71,7 +71,7 @@ final_score = (EEAT × 0.40) + (Relevance × 0.30) + (Structure × 0.20) + (Fres
 | 10 | `calculate_Structure()` | 0-1, weight 20% — headings, lists, tables |
 | 11 | `calculate_Freshness()` | 0-1, weight 10% — age-based decay |
 | 12 | `calculate_Intent_Match()` | 0-1 — content matches intent |
-| 13 | `calculate_Tone()` | 0-1 — LLM sentiment analysis |
+| 13 | `calculate_Tone()` | 0-1 — multilingual 5-star sentiment mapped to tone |
 | 14 | `detect_snippet_ready()` | 0-1 — snippet readiness |
 | 15 | `calculate_Uniqueness()` | 0-1 — LLM embedding similarity |
 | 16 | `generate_suggestions()` | Actionable improvements |

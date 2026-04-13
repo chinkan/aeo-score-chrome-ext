@@ -103,7 +103,7 @@ jobs:
             - 4-category scoring engine (AEO, SEO, GEO, LLMO)
             - Tabbed dashboard with category-specific breakdowns
             - Actionable suggestions ranked by severity
-            - Offline-ready with bundled models (~88 MB)
+            - Offline-ready with bundled models (~188 MB)
 
             [Full Changelog](https://github.com/${{ github.repository }}/compare/${{ github.event_name == 'workflow_dispatch' && format('v{0}', inputs.version) || github.ref_name }})
           files: |
