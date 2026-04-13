@@ -1,6 +1,6 @@
 {
   "name": "aeo-score-calculator",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Chrome extension that scores webpages for SEO, GEO, LLMO & AEO — 100% local, privacy-first, powered by Transformers.js",
   "type": "module",
   "repository": {

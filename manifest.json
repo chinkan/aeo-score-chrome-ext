@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AEO Score Calculator",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "Calculate Answer Engine Optimization scores for any webpage",
   "permissions": ["activeTab", "offscreen"],
   "host_permissions": ["<all_urls>"],
