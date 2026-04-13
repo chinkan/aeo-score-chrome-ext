@@ -1,5 +1,7 @@
 import { env } from "@xenova/transformers";
 
+import { toneFromSentimentLabel } from "./tone-mapping";
+
 // Chrome extensions block Web Workers on blob URLs.
 // Disable proxy worker and force single-threaded WASM.
 env.backends.onnx.wasm.proxy = false;
@@ -18,17 +20,15 @@ export async function calculateTone(text: string): Promise<number> {
 
   const classifier = await pipeline(
     "sentiment-analysis",
-    "Xenova/distilbert-base-uncased-finetuned-sst-2-english",
+    "Xenova/bert-base-multilingual-uncased-sentiment",
   );
 
   const truncated = text.slice(0, 512);
   const result = await classifier(truncated);
 
   const output = Array.isArray(result) ? result[0] : result;
-  const label = (output as { label: string; score: number }).label;
-  const score = (output as { label: string; score: number }).score;
-
-  return label === "POSITIVE" ? score : 1 - score;
+  const { label } = output as { label: string; score: number };
+  return toneFromSentimentLabel(label);
 }
 
 export async function calculateUniqueness(text: string): Promise<number> {
