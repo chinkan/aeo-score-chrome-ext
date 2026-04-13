@@ -34,6 +34,9 @@ yarn-error.log*
 # Testing
 coverage/
 
+# Local git worktrees (see .agents/skills/using-git-worktrees)
+.worktrees/
+
 # Sisyphus
 .sisyphus/
 
