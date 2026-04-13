@@ -82,7 +82,7 @@ Analyzes the active webpage's content (HTML, meta tags, schema markup) and retur
 |------------|---------------|
 | `activeTab` | Access the current tab's URL and title for display in the popup and export reports |
 | `scripting` | Inject the content script into the active page to extract and analyze DOM content |
-| `offscreen` | Run Transformers.js (DistilBERT + MiniLM models) in an offscreen document for LLM-powered tone and uniqueness scoring |
+| `offscreen` | Run Transformers.js (multilingual BERT + MiniLM models) in an offscreen document for LLM-powered tone and uniqueness scoring |
 | `host_permissions: <all_urls>` | Analyze any webpage the user visits — the extension must work on arbitrary URLs |
 
 ---
