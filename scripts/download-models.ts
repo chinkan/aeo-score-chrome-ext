@@ -4,7 +4,7 @@ const BASE = "https://huggingface.co";
 
 const MODELS = [
   {
-    repo: "Xenova/distilbert-base-uncased-finetuned-sst-2-english",
+    repo: "Xenova/bert-base-multilingual-uncased-sentiment",
     files: [
       "tokenizer.json",
       "tokenizer_config.json",

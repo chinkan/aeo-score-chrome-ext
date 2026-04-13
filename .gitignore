@@ -4,7 +4,7 @@ node_modules/
 # Build output
 dist/
 
-# ML Models (~88 MB, download with `bun run download-models`)
+# ML Models (~186 MB ONNX weights, download with `bun run download-models`)
 public/models/
 
 # Environment files
@@ -33,6 +33,9 @@ yarn-error.log*
 
 # Testing
 coverage/
+
+# Local git worktrees (see .agents/skills/using-git-worktrees)
+.worktrees/
 
 # Sisyphus
 .sisyphus/

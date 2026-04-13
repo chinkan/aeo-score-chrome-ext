@@ -45,12 +45,12 @@ An **overall score** combines all five categories equally (20% each) into a sing
 
 - **5-in-1 Scoring Engine** — SEO, GEO, LLMO, AEO, and Core Web Vitals scores in a single click
 - **100% Local Processing** — All analysis runs in-browser via Transformers.js. No data leaves your machine
-- **Local LLM Inference** — DistilBERT (sentiment) and MiniLM (embeddings) run locally — no API keys, no network calls
+- **Local LLM Inference** — Multilingual BERT (5-class star sentiment → tone) and MiniLM (embeddings) run locally — no API keys, no network calls
 - **Performance / Web Vitals** — Core Web Vitals (LCP, CLS, INP) and supporting metrics (FCP, TTFB) measured via the browser's Performance API
 - **Actionable Suggestions** — Prioritized recommendations: critical issues, warnings, and improvement tips
 - **Tabbed Dashboard** — Switch between AEO, SEO, GEO, LLMO, and CWV views with category-specific breakdowns
 - **Privacy-First Architecture** — Zero telemetry, zero tracking, zero external requests
-- **Offline-Ready** — Models are bundled locally (~88 MB). Works without an internet connection
+- **Offline-Ready** — Models are bundled locally (~188 MB total `dist/` after build). Works without an internet connection
 
 ---
 
@@ -154,7 +154,7 @@ The scoring engine uses a combination of **heuristic analysis**, **local LLM inf
 - **GEO Structured Answers**: FAQ presence, comparison tables, step-by-step guides, answer capsules
 
 ### LLM Scoring (Local Inference)
-- **Tone**: DistilBERT sentiment analysis — positive/negative sentiment confidence
+- **Tone**: Multilingual BERT star sentiment (1–5 stars) mapped to a 0–1 tone score
 - **Uniqueness**: MiniLM text embeddings — embedding magnitude as uniqueness proxy
 
 ### Core Web Vitals + Supporting Metrics (Performance API)
@@ -232,7 +232,7 @@ The scoring engine uses a combination of **heuristic analysis**, **local LLM inf
 ├── vite.config.ts              # Vite + CRXJS configuration
 ├── popup.html                  # Popup HTML entry
 ├── offscreen.html              # Offscreen document for LLM
-├── public/models/              # Local ML models (~88 MB)
+├── public/models/              # Local ML models (~186 MB ONNX; full dist ~188 MB)
 ├── scripts/
 │   └── download-models.ts      # Script to download models from HuggingFace
 ├── src/
